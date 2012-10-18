@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:yahoo:jp:chiebukuro" targetNamespace="urn:yahoo:jp:chiebukuro" elementFormDefault="qualified">
+  <xs:element name="ResultSet">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Result" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="QuestionId" type="xs:integer"/>
+              <xs:element name="QuestionUrl" type="xs:string"/>
+              <xs:element name="Content" minOccurs="0" type="xs:string"/>
+              <xs:element name="CategoryId" type="xs:integer"/>
+              <xs:element name="Category" type="xs:string"/>
+              <xs:element name="CategoryPath" type="xs:string"/>
+              <xs:element name="IsMobile" type="xs:boolean"/>
+              <xs:element name="HasImage" type="xs:boolean"/>
+              <xs:element name="AnsCount" type="xs:integer"/>
+              <xs:element name="Coin" minOccurs="0" type="xs:integer"/>
+              <xs:element name="BestAnswer" minOccurs="0" type="xs:string"/>
+              <xs:element name="UpdatedDate" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="totalResultsAvailable" type="xs:integer"/>
+      <xs:attribute name="totalResultsReturned" type="xs:integer"/>
+      <xs:attribute name="firstResultPosition" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
