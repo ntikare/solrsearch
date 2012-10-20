@@ -1,7 +1,5 @@
 package com.nawa.mysearch.solr;
 
-import java.io.UnsupportedEncodingException;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.slf4j.Logger;
