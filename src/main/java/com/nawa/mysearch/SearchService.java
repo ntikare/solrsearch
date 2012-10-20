@@ -15,10 +15,16 @@ import com.nawa.mysearch.solr.SearchQueryBuilder;
 import com.nawa.mysearch.solr.SolrSearchService;
 import com.nawa.mysearch.view.ViewData;
 
+/**
+ * Handles search service
+ * 
+ * @author navneet
+ * 
+ */
 @Service
 public class SearchService {
-	
-	private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
+
+	private static final Logger logger = LoggerFactory.getLogger(SearchService.class);
 
 	@Autowired
 	private SolrSearchService searchService;
@@ -29,27 +35,49 @@ public class SearchService {
 	@Autowired
 	private SearchViewCreator searchViewCreator;
 
+	/**
+	 * default search
+	 * 
+	 * @return {@link ViewData} containing all categories list
+	 */
 	public ViewData search() {
 		return search(null, null);
 	}
 
+	/**
+	 * search with keyword and category not specified
+	 * 
+	 * @param keyword
+	 * @return {@link ViewData}
+	 */
 	public ViewData search(String keyword) {
 		return search(keyword, null);
 	}
 
+	/**
+	 * And search with keyword and category
+	 * 
+	 * @param keyword
+	 * @param category
+	 * @return {@link ViewData}
+	 */
 	public ViewData search(String keyword, String category) {
 
-		QueryResponse res = searchService.search(searchQueryBuilder.build(keyword, category));
-		logger.debug("search response="+res);
-		List<Question> questions = null;
-		FacetField field = null;
-		if (res != null) {
-			questions = res.getBeans(Question.class);
-			logger.debug("questions="+questions);
-			field = res.getFacetField("category");
-			logger.debug(field.toString());
+		QueryResponse res;
+		try {
+			res = searchService.search(searchQueryBuilder.build(keyword, category));
+			List<Question> questions = null;
+			FacetField field = null;
+			if (res != null) {
+				questions = res.getBeans(Question.class);
+				field = res.getFacetField("category");
+			}
+			return searchViewCreator.create(questions, field);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			return null;
 		}
-		return searchViewCreator.create(questions, field);
+
 	}
 
 }

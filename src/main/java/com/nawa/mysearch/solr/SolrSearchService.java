@@ -9,6 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * solrj interface for solr search
+ * 
+ * @author navneet
+ * 
+ */
 @Service
 public class SolrSearchService {
 	private static final Logger logger = LoggerFactory.getLogger(SolrSearchService.class);
@@ -19,6 +25,10 @@ public class SolrSearchService {
 	@Autowired
 	private SolrServer solrServer;
 
+	/**
+	 * @param query
+	 * @return
+	 */
 	public QueryResponse search(SolrQuery query) {
 		try {
 			QueryResponse rsp = solrServer.query(query);

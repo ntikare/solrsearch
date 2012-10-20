@@ -12,6 +12,12 @@ import org.springframework.stereotype.Service;
 
 import com.nawa.mysearch.beans.Question;
 
+/**
+ * solrj interface for solr update
+ * 
+ * @author navneet
+ * 
+ */
 @Service
 public class SolrUpdateService {
 
@@ -20,6 +26,12 @@ public class SolrUpdateService {
 	@Autowired
 	private SolrServer solrServer;
 
+	/**
+	 * Adds question list to solr index
+	 * 
+	 * @param list
+	 * @return true if index update is successful otherwise false
+	 */
 	public boolean addQuestions(List<Question> list) {
 
 		try {
@@ -31,14 +43,20 @@ public class SolrUpdateService {
 			try {
 				solrServer.rollback();
 			} catch (Exception e1) {
-
+				logger.error("exception in rollback", e);
 			}
 			return false;
 		}
 
 	}
 
-	public boolean addQuestion(Question quest) throws SolrServerException, IOException {
+	/**
+	 * Adds a question to solr index
+	 * 
+	 * @param quest
+	 * @return true if index update is successful otherwise false
+	 */
+	public boolean addQuestion(Question quest) {
 
 		try {
 			solrServer.addBean(quest);
@@ -49,12 +67,15 @@ public class SolrUpdateService {
 			try {
 				solrServer.rollback();
 			} catch (Exception e1) {
-
+				logger.error("exception in rollback", e);
 			}
 			return false;
 		}
 
+	}
 
+	public void setSolrServer(SolrServer solrServer) {
+		this.solrServer = solrServer;
 	}
 
 }
